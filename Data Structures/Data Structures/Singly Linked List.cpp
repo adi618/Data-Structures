@@ -232,6 +232,18 @@ public:
 			index--;
 		}
 	}
+
+	~SinglyLinkedList()
+	{
+		Node* toDelete = head;
+
+		while (head != nullptr)
+		{
+			head = head->next;
+			delete toDelete;
+			toDelete = head;
+		}
+	}
 };
 
 

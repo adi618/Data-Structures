@@ -44,12 +44,14 @@ public:
 
 	std::string pop()
 	{
-		Node* temp = top;
+		Node* toDelete = top;
+		std::string toReturn = top->value;
 
 		top = top->next;
 		totalNodes--;
 
-		return temp->value;
+		delete toDelete;
+		return toReturn;
 	}
 
 	std::string peek()
@@ -112,6 +114,18 @@ public:
 		std::cout << "\n\n\n\t";
 		system("pause");
 	}
+
+	~Stack()
+	{
+		Node* toDelete = top;
+
+		while (top != nullptr)
+		{
+			top = top->next;
+			delete toDelete;
+			toDelete = top;
+		}
+	}
 };
 
 
@@ -132,7 +146,7 @@ void stack()
 		std::cout << "\n\n\tChoose an option:"
 			<< "\n\t\t1 - Add node - .push()"
 			<< "\n\t\t2 - Remove node - .pop()"
-			<< "\n\t\t3 - .top()"
+			<< "\n\t\t3 - Check top node - .top()"
 			<< "\n\t\t10 - Back";
 		std::cout << "\n\n\tStack:";
 		myStack.printStack();
