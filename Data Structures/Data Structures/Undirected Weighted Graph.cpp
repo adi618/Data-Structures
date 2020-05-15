@@ -80,7 +80,7 @@ public:
 	{
 		for (int i = 0; i < edges.size(); i++)
 		{
-			if (edges[i].vertex1 == vertices.size() or edges[i].vertex2 == vertices.size())
+			if (edges[i].vertex1 == vertices.size() - 1 or edges[i].vertex2 == vertices.size() - 1)
 			{
 				edges.erase(edges.begin() + i);
 				i--;
@@ -149,6 +149,8 @@ public:
 			std::cout << "\n\n\tMinimum spanning tree total weight: " << totalWeight;
 		else
 			std::cout << "\n\n\tMinimum spanning tree could not be formed using the entered edges!";
+		std::cout << "\n\n\t\t";
+		system("pause");
 
 		delete Dset;
 	}
@@ -162,7 +164,9 @@ public:
 	{
 		for (int i = 0; i < edges.size(); i++)
 		{
-			std::cout << "\n\t\tEdge " << i + 1 << ":\tNode " << edges[i].vertex1 << " <--> " << edges[i].vertex2 << ", tezina: " << edges[i].weight;
+			std::cout << "\n\t\tEdge " << i + 1 << ":"
+				<< "\tVertices: " << edges[i].vertex1 + 1 << " <--> " << edges[i].vertex2 + 1 << ", "
+				<< "Weight: " << edges[i].weight;
 		}
 	}
 
