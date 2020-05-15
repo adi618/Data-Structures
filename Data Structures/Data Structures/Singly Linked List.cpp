@@ -127,21 +127,20 @@ public:
 		if (length == 0 || length == 1)
 			return;
 
-		Node* first = head;
-		Node* second = head->next;
-		Node* temp;
+		Node* fast = head;
+		Node* slow = nullptr;
+		Node* slowest = nullptr;
 
 		tail = head;
 
-		while (second != nullptr)
+		while (fast != nullptr)
 		{
-			temp = second->next;
-			second->next = first;
-			first = second;
-			second = temp;
+			slowest = slow;
+			slow = fast;
+			fast = fast->next;
+			slow->next = slowest;
 		}
-		head->next = nullptr;
-		head = first;
+		head = slow;
 	}
 
 	void removeKValues(int value)

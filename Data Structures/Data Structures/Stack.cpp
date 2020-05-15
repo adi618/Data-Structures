@@ -61,6 +61,11 @@ public:
 		return top->value;
 	}
 
+	bool isEmpty()
+	{
+		return totalNodes == 0;
+	}
+
 	void printStack()
 	{
 		std::vector <std::string> values(10);
@@ -162,7 +167,7 @@ void stack()
 		}
 		else if (option == 2)
 		{
-			if (myStack.getTotalNodes() == 0)
+			if (myStack.isEmpty())
 				std::cout << "\n\t\tStack is empty!";
 			else
 				std::cout << "\n\t\tTo be removed data: " << myStack.pop();
@@ -171,7 +176,7 @@ void stack()
 		}
 		else if (option == 3)
 		{
-			if (myStack.getTotalNodes() == 0)
+			if (myStack.isEmpty())
 				std::cout << "\n\t\tStack is empty!";
 			else
 				std::cout << "\n\t\tData at the top of the stack: " << myStack.peek();

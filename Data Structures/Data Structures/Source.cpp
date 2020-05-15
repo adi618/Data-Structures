@@ -3,6 +3,8 @@
 
 void singlyLinkedList();
 void stack();
+void queue();
+void undirectedWeightedGraph();
 
 
 int main()
@@ -17,10 +19,10 @@ int main()
 		std::cout << "\n\n\tChoose a data structure to simulate:"
 			<< "\n\t\t1 - Singly Linked List"
 			<< "\n\t\t2 - Stack"
-			<< "\n\t\t3 - "
+			<< "\n\t\t3 - Queue"
 			<< "\n\t\t4 - "
 			<< "\n\t\t5 - "
-			<< "\n\t\t6 - "
+			<< "\n\t\t6 - Undirected Weighted Graph"
 			<< "\n\t\t7 - "
 			<< "\n\t\t8 - "
 			<< "\n\t\t10 - Exit"
@@ -38,6 +40,7 @@ int main()
 		}
 		else if (option == 3)
 		{
+			queue();
 		}
 		else if (option == 4)
 		{
@@ -47,6 +50,7 @@ int main()
 		}
 		else if (option == 6)
 		{
+			undirectedWeightedGraph();
 		}
 		else if (option == 7)
 		{
