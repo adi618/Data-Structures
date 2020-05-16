@@ -100,8 +100,14 @@ namespace
 							adjMatrix[edge.vertex2][edge.vertex1] = edge.weight;
 				}
 				else
-					std::cout << "\n\n\t\tNegative weight encountered, this weight will not be taken into account"
-					<< "\n\t\tsince Dijkstra's algorithm does not work with negative weights.";
+				{
+					std::cout << "\n\n\t\tEdge: "
+						<< "\tVertices: " << edge.vertex1 + 1 << " --> " << edge.vertex2 + 1 << ", "
+						<< "Weight: " << edge.weight
+						<< "\n\t\tHas a negative weight and therefore will not be taken into account"
+						<< "\n\t\tsince Dijkstra's algorithm is not accurate with negative weights.";
+
+				}
 			}
 
 			return adjMatrix;
