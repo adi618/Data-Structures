@@ -4,7 +4,7 @@
 void singlyLinkedList();
 void stack();
 void queue();
-void undirectedWeightedGraph();
+void graph();
 
 
 int main()
@@ -50,7 +50,7 @@ int main()
 		}
 		else if (option == 6)
 		{
-			undirectedWeightedGraph();
+			graph();
 		}
 		else if (option == 7)
 		{
