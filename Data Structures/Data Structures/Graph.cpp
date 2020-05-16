@@ -338,9 +338,9 @@ void graph()
 			<< "\n\t\t2 - Remove vertex (also removes its edges)"
 			<< "\n\t\t3 - Add edge"
 			<< "\n\t\t4 - Remove edges with entered information"
-			<< "\n\t\t5 - Minimum cost spanning tree; Kruskal's algorithm; undirected graph only"
-			<< "\n\t\t6 - Shortest path from source to earch other vertex; Dijkstra's algorithm; directed or undirected graph"
-			<< "\n\t\t7 - Shortest path from source to destination without weights; breadth first search; undirected graph only"
+			<< "\n\t\t5 - Minimum cost spanning tree | Kruskal's algorithm | undirected graph only"
+			<< "\n\t\t6 - Shortest path from source to earch other vertex | Dijkstra's algorithm | directed or undirected graph"
+			<< "\n\t\t7 - Shortest path from source to destination without weights | Breadth First Search | undirected graph only"
 			<< "\n\t\t10 - Back";
 		std::cout << "\n\n\t\tOption: ";
 		std::cin >> option;
