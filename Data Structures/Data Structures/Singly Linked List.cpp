@@ -19,6 +19,33 @@ private:
 	Node* tail;
 	int length;
 
+	bool invalidIndex(int index)
+	{
+		if (index < 0 || index > length)
+		{
+			std::cout << "\n\t\tInvalid index!\n\n\t\t";
+			system("pause");
+			return true;
+		}
+		return false;
+	}
+
+	void traverseToIndex(int index, Node** current, Node** previous = nullptr)
+	{
+		while (*current != nullptr)
+		{
+			if (index == 1)
+				break;
+
+			if (previous != nullptr)
+				*previous = *current;
+			*current = (*current)->next;
+
+			index--;
+		}
+	}
+	
+
 public:
 	SinglyLinkedList() : head(nullptr), tail(nullptr), length(0) {}
 
@@ -204,32 +231,6 @@ public:
 			return true;
 		}
 		return false;
-	}
-
-	bool invalidIndex(int index)
-	{
-		if (index < 0 || index > length)
-		{
-			std::cout << "\n\t\tInvalid index!\n\n\t\t";
-			system("pause");
-			return true;
-		}
-		return false;
-	}
-
-	void traverseToIndex(int index, Node** current, Node** previous = nullptr)
-	{
-		while (*current != nullptr)
-		{
-			if (index == 1)
-				break;
-
-			if (previous != nullptr)
-				*previous = *current;
-			*current = (*current)->next;
-
-			index--;
-		}
 	}
 
 	~SinglyLinkedList()
