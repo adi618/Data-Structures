@@ -142,11 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Singly Linked List.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Stack.cpp" />
-    <ClCompile Include="Undirected Weighted Graph.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
