@@ -4,6 +4,7 @@
 void singlyLinkedList();
 void stack();
 void queue();
+void binarySearchTree();
 void graph();
 
 
@@ -20,7 +21,7 @@ int main()
 			<< "\n\t\t1 - Singly Linked List"
 			<< "\n\t\t2 - Stack"
 			<< "\n\t\t3 - Queue"
-			<< "\n\t\t4 - "
+			<< "\n\t\t4 - Binary Search Tree"
 			<< "\n\t\t5 - "
 			<< "\n\t\t6 - Graph"
 			<< "\n\t\t7 - "
@@ -44,6 +45,7 @@ int main()
 		}
 		else if (option == 4)
 		{
+			binarySearchTree();
 		}
 		else if (option == 5)
 		{
