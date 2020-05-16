@@ -34,12 +34,12 @@ private:
 	{
 		while (*current != nullptr)
 		{
-			if (index == 1)
-				break;
-
 			if (previous != nullptr)
 				*previous = *current;
 			*current = (*current)->next;
+
+			if (index <= 1)
+				break;
 
 			index--;
 		}

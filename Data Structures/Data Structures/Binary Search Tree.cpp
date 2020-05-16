@@ -64,7 +64,7 @@ public:
 		}
 
 		Node* current = root;
-		Node* previous = nullptr;
+		Node* previous = root;
 
 		while (current != nullptr)
 		{
@@ -188,6 +188,39 @@ public:
 		return current->value + valueSum(current->left) + valueSum(current->right);
 	}
 
+	void DFSpreOrder(Node* current)
+	{
+		std::cout << current->value << " ";
+
+		if (current->left != nullptr)
+			DFSpreOrder(current->left);
+
+		if (current->right != nullptr)
+			DFSpreOrder(current->right);
+	}
+
+	void DFSinOrder(Node* current)
+	{
+		if (current->left != nullptr)
+			DFSpreOrder(current->left);
+
+		std::cout << current->value << " ";
+
+		if (current->right != nullptr)
+			DFSpreOrder(current->right);
+	}
+
+	void DFSpostOrder(Node* current)
+	{
+		if (current->left != nullptr)
+			DFSpreOrder(current->left);
+
+		if (current->right != nullptr)
+			DFSpreOrder(current->right);
+
+		std::cout << current->value << " ";
+	}
+
 	void printTree()
 	{
 		if (root == nullptr)
@@ -247,7 +280,11 @@ void binarySearchTree()
 		std::cout << "\n\n\tChoose an option:"
 			<< "\n\t\t1 - Insert a number into the tree"
 			<< "\n\t\t2 - Remove a number from the tree"
-			<< "\n\t\t2 - Print the sum of all numbers in the tree"
+			<< "\n\t\t3 - Check if a number exists in the tree using Binary Search"
+			<< "\n\t\t4 - Print the sum of all numbers in the tree"
+			<< "\n\t\t5 - Print the numbers in the tree using Depth First Search preorder traversal"
+			<< "\n\t\t6 - Print the numbers in the tree using Depth First Search inorder traversal"
+			<< "\n\t\t7 - Print the numbers in the tree using Depth First Search postorder traversal"
 			<< "\n\t\t10 - Back"
 			<< "\n\n\t\tOption: ";
 
@@ -265,11 +302,31 @@ void binarySearchTree()
 		}
 		else if (option == 3)
 		{
-			std::cout << myTree.valueSum(myTree.getRoot());
+			std::cout << "\n\n\t\tEntered number does " << (myTree.valueSum(myTree.getRoot()) ? "" : "not") << " exist in the tree";
 			myTree.pause();
 		}
 		else if (option == 4)
 		{
+			std::cout << "\n\n\t\tSum of all numbers in the tree: " << myTree.valueSum(myTree.getRoot());
+			myTree.pause();
+		}
+		else if (option == 5)
+		{
+			std::cout << "\n\n\t\tDepth First Search preorder traversal result: ";
+			myTree.DFSpreOrder(myTree.getRoot());
+			myTree.pause();
+		}
+		else if (option == 6)
+		{
+			std::cout << "\n\n\t\tDepth First Search inorder traversal result: ";
+			myTree.DFSinOrder(myTree.getRoot());
+			myTree.pause();
+		}
+		else if (option == 7)
+		{
+			std::cout << "\n\n\t\tDepth First Search postorder traversal result: ";
+			myTree.DFSpostOrder(myTree.getRoot());
+			myTree.pause();
 		}
 		else if (option == 10)
 			return;
