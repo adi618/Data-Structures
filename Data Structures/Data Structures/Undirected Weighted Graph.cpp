@@ -235,7 +235,7 @@ namespace
 			for (int i = 0; i < edges.size(); i++)
 			{
 				std::cout << "\n\t\tEdge " << i + 1 << ": "
-					<< "\tVertices: " << edges[i].vertex1 + 1 << " <--> " << edges[i].vertex2 + 1 << ", "
+					<< "\tVertices: " << edges[i].vertex1 + 1 << " --> " << edges[i].vertex2 + 1 << ", "
 					<< "Weight: " << edges[i].weight;
 			}
 		}
@@ -264,7 +264,7 @@ void enterEdgeInfo(int& vertex1, int& vertex2, int& weight)
 	std::cin >> weight;
 }
 
-void undirectedWeightedGraph()
+void graph()
 {
 	int option;
 	int vertex1;

@@ -22,7 +22,7 @@ int main()
 			<< "\n\t\t3 - Queue"
 			<< "\n\t\t4 - "
 			<< "\n\t\t5 - "
-			<< "\n\t\t6 - Undirected Weighted Graph"
+			<< "\n\t\t6 - Graph"
 			<< "\n\t\t7 - "
 			<< "\n\t\t8 - "
 			<< "\n\t\t10 - Exit"
