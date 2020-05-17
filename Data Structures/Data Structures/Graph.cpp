@@ -200,30 +200,30 @@ namespace
 			int MAX = std::numeric_limits <int>::max();
 			std::vector <std::vector <int>> adjMatrix = turnIntoAdjacencyMatrix(directed);
 			std::vector <int> dist(vertices.size(), MAX);
-			std::vector <bool> final(vertices.size(), false);
+			std::vector <bool> visited(vertices.size(), false);
 
 			dist[source] = 0;
 
-			for (int count = 0; count < vertices.size() - 1; count++)
+			for (int i = 0; i < vertices.size() - 1; i++)
 			{
 				int min = MAX;
-				int min_index = 0;
+				int minIndex = 0;
 
 				for (int v = 0; v < vertices.size(); v++)
 				{
-					if (final[v] == false && dist[v] <= min)
+					if (visited[v] == false && dist[v] <= min)
 					{
 						min = dist[v];
-						min_index = v;
+						minIndex = v;
 					}
 				}
-				int u = min_index;
+				int u = minIndex;
 
-				final[u] = true;
+				visited[u] = true;
 
 				for (int v = 0; v < vertices.size(); v++)
 				{
-					if (!final[v] and adjMatrix[u][v] >= 0 && dist[u] != MAX and dist[u] + adjMatrix[u][v] < dist[v])
+					if (!visited[v] and adjMatrix[u][v] >= 0 && dist[u] != MAX and dist[u] + adjMatrix[u][v] < dist[v])
 						dist[v] = dist[u] + adjMatrix[u][v];
 				}
 			}

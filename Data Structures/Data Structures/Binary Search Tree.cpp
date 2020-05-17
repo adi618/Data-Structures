@@ -17,17 +17,15 @@ class BinarySearchTree
 {
 private:
 	Node* root;
-	int totalNodes;
 
 public:
-	BinarySearchTree() : root(nullptr), totalNodes(0) {}
+	BinarySearchTree() : root(nullptr) {}
 
 	Node* getRoot() { return root; }
 
 	void insert(int value)
 	{
 		Node* newNode = new Node(value);
-		totalNodes++;
 
 		if (root == nullptr)
 		{
@@ -130,7 +128,7 @@ public:
 				current->value = temp->value;
 				previous->left = nullptr;
 				delete temp;
-
+				return;
 			}
 		}
 	}
@@ -255,6 +253,37 @@ public:
 		}
 	}
 
+	void printBranches()
+	{
+		if (root == nullptr)
+			return;
+
+		Node* current;
+
+		std::queue <Node*> queue;
+
+		queue.push(root);
+
+		std::cout << "\n\n\tBranches: ";
+		while (queue.size() > 0)
+		{
+			current = queue.front();
+			queue.pop();
+
+			if (current->left != nullptr)
+				std::cout << "\n\t\tParent: " << current->value << " Left Child: " << current->left->value;
+
+			if (current->right != nullptr)
+				std::cout << "\n\t\tParent: " << current->value << " Right Child: " << current->right->value;
+
+			if (current->left)
+				queue.push(current->left);
+
+			if (current->right)
+				queue.push(current->right);
+		}
+	}
+
 	void pause()
 	{
 		std::cout << "\n\n\t\t";
@@ -277,6 +306,7 @@ void binarySearchTree()
 		system("cls");
 		std::cout << "\n\n\tBinary Search Tree:      ";
 		myTree.printTree();
+		myTree.printBranches();
 		std::cout << "\n\n\tChoose an option:"
 			<< "\n\t\t1 - Insert a number into the tree"
 			<< "\n\t\t2 - Remove a number from the tree"
