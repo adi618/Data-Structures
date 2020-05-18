@@ -6,6 +6,7 @@ void stack();
 void queue();
 void binarySearchTree();
 void graph();
+void AVL();
 
 
 int main()
@@ -22,10 +23,8 @@ int main()
 			<< "\n\t\t2 - Stack"
 			<< "\n\t\t3 - Queue"
 			<< "\n\t\t4 - Binary Search Tree"
-			<< "\n\t\t5 - "
+			<< "\n\t\t5 - AVL Tree"
 			<< "\n\t\t6 - Graph"
-			<< "\n\t\t7 - "
-			<< "\n\t\t8 - "
 			<< "\n\t\t10 - Exit"
 			<< "\n\n\t\tChoise: ";
 
@@ -49,16 +48,11 @@ int main()
 		}
 		else if (option == 5)
 		{
+			AVL();
 		}
 		else if (option == 6)
 		{
 			graph();
-		}
-		else if (option == 7)
-		{
-		}
-		else if (option == 8)
-		{
 		}
 		else if (option == 10)
 		{

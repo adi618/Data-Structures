@@ -1,54 +1,190 @@
 #include <iostream>
+#include <algorithm>
 #include <queue>
-#include <vector>
 
-namespace {
+namespace
+{
 	struct Node
 	{
-		int value;
-		Node* right;
 		Node* left;
+		Node* right;
+		int value;
+		int height;
 
-		Node(int value) :value(value), right(nullptr), left(nullptr) {}
+		Node(int value) : value(value), height(1), right(nullptr), left(nullptr) {}
 	};
 }
 
-class BinarySearchTree
+class AVLtree
 {
 private:
 	Node* root;
 
+	void heightAssignment(Node* current, int& leftHeight, int& rightHeight)
+	{
+		if (current != nullptr)
+		{
+			if (current->left != nullptr)
+				leftHeight = current->left->height;
+
+			if (current->right != nullptr)
+				rightHeight = current->right->height;
+		}
+	}
+
+	int nodeHeight(Node* current)
+	{
+		int leftHeight = 0;
+		int rightHeight = 0;
+
+		heightAssignment(current, leftHeight, rightHeight);
+
+		return std::max(leftHeight, rightHeight) + 1;
+	}
+
+	int balanceFactor(Node* current)
+	{
+		int leftHeight = 0;
+		int rightHeight = 0;
+
+		heightAssignment(current, leftHeight, rightHeight);
+
+		return leftHeight - rightHeight;
+	}
+
+
+	Node* LL_Rotation(Node* current)	// LL rotation == when the two nodes forming an imbalance are both on the left side of the node at which
+	{									// the imbalance is formed, example:
+		Node* currLeft = current->left;							//        50
+		Node* currLeftsRight = current->left->right;			//		 /								   40
+		// curr == currents										//      40	 	 after LL rotation =>	  /  \
+																//     / 								 30  50
+		currLeft->right = current;								//	  30
+		current->left = currLeftsRight;															
+
+		current->height = nodeHeight(current);
+		currLeft->height = nodeHeight(currLeft);
+
+		if (current == root)
+			root = currLeft;
+
+		return currLeft;
+	}
+	//			50
+	//		   /								45
+	//		 40			after LR =>			   /  \
+	//		   \							 40    50
+	//          45
+	Node* LR_Rotation(Node* current)
+	{
+		Node* currLeft = current->left;
+		Node* currLeftsRight = currLeft->right;
+
+		currLeft->right = currLeftsRight->left;
+		current->left = currLeftsRight->right;
+
+		currLeftsRight->left = currLeft;
+		currLeftsRight->right = current;
+
+		current->height = nodeHeight(current);
+		currLeft->height = nodeHeight(currLeft);
+		currLeftsRight->height = nodeHeight(currLeftsRight);
+
+		if (current == root)
+			root = currLeftsRight;
+
+		return currLeftsRight;
+	}
+
+	//			50
+	//		      \								60
+	//		      60		after RR =>		   /  \
+	//		   		\						  50   70
+	//				70
+	Node* RR_Rotation(Node* current)
+	{
+		Node* currRight = current->right;
+		Node* currRightsLeft = currRight->left;
+
+		currRight->left = current;
+		current->right = currRightsLeft;
+
+		current->height = nodeHeight(current);
+		currRight->height = nodeHeight(currRight);
+
+		if (current == root)
+			root = currRight;
+
+		return currRight;
+	}
+
+	//			50
+	//		  	  \								55
+	//		 	   60		after RL =>		   /  \
+	//		  	  /							 50    60
+	//			 55	
+	Node* RL_Rotation(Node* current)
+	{
+		Node* currRight = current->right;
+		Node* currRightsLeft = currRight->left;
+
+		currRight->left = currRightsLeft->right;
+		current->right = currRightsLeft->left;
+
+		currRightsLeft->right = currRight;
+		currRightsLeft->left = current;
+
+		current->height = nodeHeight(current);
+		currRight->height = nodeHeight(currRight);
+		currRightsLeft->height = nodeHeight(currRightsLeft);
+
+		if (current == root)
+			root = currRightsLeft;
+
+		return currRightsLeft;
+	}
+
 public:
-	BinarySearchTree() : root(nullptr) {}
+	AVLtree() : root(nullptr) {}
 
 	Node* getRoot() { return root; }
 
-	void insert(int value)
+	Node* insert(Node* current, int value)
 	{
-		Node* newNode = new Node(value);
+		Node* t = nullptr;
 
-		if (root == nullptr)
+		if (current == nullptr)
 		{
-			root = newNode;
-			return;
+			t = new Node(value);
+			if (this->root == nullptr)
+				root = t;
+			return t;
 		}
 
-		Node* current = root;
-		Node* previous = root;
+		if (value < current->value)
+			current->left = insert(current->left, value);
+		else if (value > current->value)
+			current->right = insert(current->right, value);
 
-		while (current != nullptr)
-		{
-			previous = current;
-			if (value < current->value)
-				current = current->left;
-			else
-				current = current->right;
-		}
+		current->height = nodeHeight(current);
 
-		if (value < previous->value)
-			previous->left = newNode;
-		else
-			previous->right = newNode;
+		int BF = balanceFactor(current);
+		int BFleft = balanceFactor(current->left);
+		int BFright = balanceFactor(current->right);
+
+		if (BF == 2 and BFleft == 1)
+			return LL_Rotation(current);
+
+		if (BF == 2 && BFleft == -1)
+			return LR_Rotation(current);
+
+		if (BF == -2 && BFright == -1)
+			return RR_Rotation(current);
+
+		if (BF == -2 && BFright == 1)
+			return RL_Rotation(current);
+
+		return current;
 	}
 
 	void remove(int value)
@@ -133,92 +269,6 @@ public:
 		}
 	}
 
-	bool lookup(int value)
-	{
-		if (root == nullptr)
-			return false;
-
-		Node* current = root;
-
-		while (current != nullptr)
-		{
-			if (value < current->value)
-				current = current->left;
-			else if (value > current->value)
-				current = current->right;
-			else
-				return true;
-		}
-		return false;
-	}
-
-	std::vector <int> BreadthFirstSearch()
-	{
-		Node* current = root;
-
-		std::vector <int> result;
-		std::queue <Node*> queue;
-
-		queue.push(current);
-
-		while (queue.size() > 0)
-		{
-			current = queue.front();
-			queue.pop();
-
-			result.push_back(current->value);
-
-			if (current->left)
-				queue.push(current->left);
-
-			if (current->right)
-				queue.push(current->right);
-		}
-
-		return result;
-	}
-
-	int valueSum(Node* current)
-	{
-		if (current == nullptr)
-			return 0;
-
-		return current->value + valueSum(current->left) + valueSum(current->right);
-	}
-
-	void DFSpreOrder(Node* current)
-	{
-		std::cout << current->value << " ";
-
-		if (current->left != nullptr)
-			DFSpreOrder(current->left);
-
-		if (current->right != nullptr)
-			DFSpreOrder(current->right);
-	}
-
-	void DFSinOrder(Node* current)
-	{
-		if (current->left != nullptr)
-			DFSpreOrder(current->left);
-
-		std::cout << current->value << " ";
-
-		if (current->right != nullptr)
-			DFSpreOrder(current->right);
-	}
-
-	void DFSpostOrder(Node* current)
-	{
-		if (current->left != nullptr)
-			DFSpreOrder(current->left);
-
-		if (current->right != nullptr)
-			DFSpreOrder(current->right);
-
-		std::cout << current->value << " ";
-	}
-
 	void printTree()
 	{
 		if (root == nullptr)
@@ -284,13 +334,7 @@ public:
 		}
 	}
 
-	void pause()
-	{
-		std::cout << "\n\n\t\t";
-		system("pause");
-	}
-
-	~BinarySearchTree()
+	~AVLtree()
 	{
 		deleteNodes(root);
 	}
@@ -309,28 +353,21 @@ public:
 
 void enterNumber(int& num);		// function defined in Graph.cpp
 
-void enterIndex(int& index);	// function defined in Graph.cpp
-
-void binarySearchTree()
+void AVL()
 {
 	int option;
 	int num;
-	BinarySearchTree myTree;
+	AVLtree myTree;
 
 	while (true)
 	{
 		system("cls");
-		std::cout << "\n\n\tBinary Search Tree:      ";
+		std::cout << "\n\n\tBalanced BST | AVL Tree:";
 		myTree.printTree();
 		myTree.printBranches();
 		std::cout << "\n\n\tChoose an option:"
-			<< "\n\t\t1 - Insert a number into the tree"
-			<< "\n\t\t2 - Remove a number from the tree"
-			<< "\n\t\t3 - Check if a number exists in the tree using Binary Search"
-			<< "\n\t\t4 - Print the sum of all numbers in the tree"
-			<< "\n\t\t5 - Print the numbers in the tree using Depth First Search preorder traversal"
-			<< "\n\t\t6 - Print the numbers in the tree using Depth First Search inorder traversal"
-			<< "\n\t\t7 - Print the numbers in the tree using Depth First Search postorder traversal"
+			<< "\n\t\t1 - Insert a number into the AVL tree"
+			<< "\n\t\t2 - Remove a number from the AVL tree"
 			<< "\n\t\t10 - Back"
 			<< "\n\n\t\tOption: ";
 
@@ -339,41 +376,12 @@ void binarySearchTree()
 		if (option == 1)
 		{
 			enterNumber(num);
-			myTree.insert(num);
+			myTree.insert(myTree.getRoot(), num);
 		}
 		else if (option == 2)
 		{
 			enterNumber(num);
 			myTree.remove(num);
-		}
-		else if (option == 3)
-		{
-			enterNumber(num);
-			std::cout << "\n\n\t\tEntered number does " << (myTree.lookup(num) ? "" : "not") << " exist in the tree";
-			myTree.pause();
-		}
-		else if (option == 4)
-		{
-			std::cout << "\n\n\t\tSum of all numbers in the tree: " << myTree.valueSum(myTree.getRoot());
-			myTree.pause();
-		}
-		else if (option == 5)
-		{
-			std::cout << "\n\n\t\tDepth First Search preorder traversal result: ";
-			myTree.DFSpreOrder(myTree.getRoot());
-			myTree.pause();
-		}
-		else if (option == 6)
-		{
-			std::cout << "\n\n\t\tDepth First Search inorder traversal result: ";
-			myTree.DFSinOrder(myTree.getRoot());
-			myTree.pause();
-		}
-		else if (option == 7)
-		{
-			std::cout << "\n\n\t\tDepth First Search postorder traversal result: ";
-			myTree.DFSpostOrder(myTree.getRoot());
-			myTree.pause();
 		}
 		else if (option == 10)
 			return;

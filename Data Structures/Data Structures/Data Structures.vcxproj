@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AVL Tree.cpp" />
     <ClCompile Include="Binary Search Tree.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Queue.cpp" />

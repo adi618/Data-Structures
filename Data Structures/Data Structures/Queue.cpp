@@ -84,6 +84,18 @@ public:
 			}
 		}
 	}
+
+	~Queue()
+	{
+		Node* toDelete = first;
+
+		while (first != nullptr)
+		{
+			first = first->next;
+			delete toDelete;
+			toDelete = first;
+		}
+	}
 };
 
 
