@@ -292,7 +292,8 @@ public:
 
 	~BinarySearchTree()
 	{
-		deleteNodes(root);
+		if (root != nullptr)
+			deleteNodes(root);
 	}
 
 	void deleteNodes(Node* current)
