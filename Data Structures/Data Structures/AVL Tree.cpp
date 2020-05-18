@@ -163,7 +163,7 @@ public:
 
 		if (value < current->value)
 			current->left = insert(current->left, value);
-		else if (value > current->value)
+		else if (value >= current->value)
 			current->right = insert(current->right, value);
 
 		current->height = nodeHeight(current);
